@@ -1,15 +1,5 @@
 -- Viimased 10 müügitehingut kuupäeva järgi
 
-select
-  sale_id,
-  invoice_id,
-  sale_date,
-  total_price,
-  channel
-from sales
-order by sale_date desc
-limit 10;
-
 | sale_id | invoice_id       | sale_date              | total_price | channel |
 | ------- | ---------------- | ---------------------- | ----------- | ------- |
 | 4387    | INV-202401-00095 | 2026-06-28 00:00:00+00 | 253.23      | pood    |
@@ -28,10 +18,6 @@ Tulemus: Viimased registreeritud tehingud toimusid perioodil 02.04.2026 - 28.06.
 
 --Mitu müügirida on ilma kuupäevata?
 
-select
-  count(*) - count(sale_date) as puuduvad_kuupäevad
-from sales;
-
 | puuduvad_kuupäevad |
 | ------------------ |
 | 0                  |
@@ -41,16 +27,6 @@ Tulemus: 0
 
 -- 10 kõige suuremat müügisummat
 
-select
-  sale_id,
-  invoice_id,
-  sale_date,
-  total_price,
-  channel,
-  store_location
-from sales
-order by total_price desc
-limit 10;
 
 | sale_id | invoice_id       | sale_date              | total_price | channel | store_location |
 | ------- | ---------------- | ---------------------- | ----------- | ------- | -------------- |
@@ -70,18 +46,6 @@ Tulemus: Suurima tehingu summa andmebaasis oli 2170. Top10 suurima tehingu vahem
 
 -- 10 kõige väiksemat positiivset müügisummat
 
-select
-  sale_id,
-  invoice_id,
-  sale_date,
-  total_price,
-  channel,
-  store_location
-from sales
-where total_price > 0
-order by total_price asc
-limit 10;
-
 | sale_id | invoice_id       | sale_date              | total_price | channel | store_location |
 | ------- | ---------------- | ---------------------- | ----------- | ------- | -------------- |
 | 6804    | INV-202407-00113 | 2024-07-29 00:00:00+00 | 15.09       | pood    | Pärnu          |
@@ -100,10 +64,6 @@ Tulemus: Väikseim positiivne müügisumma oli 15,09€, mis oli ühtlasi ka top
 
 -- Kas andmetes on null või negatiivseid summasid?
 
-select count(*) as kahtlased_tehingud
-from sales
-where total_price <= 0;
-
 | kahtlased_tehingud |
 | ------------------ |
 | 305                |
@@ -112,10 +72,6 @@ Tulemus: Tuvastati kokku 305 tehingut, mille summa on 0€ või negatiivne.
 Äririsk Toomasele: Null- ja negatiivsed summad viitavad käitlemata tagastusele, testkirjetele või impordivigadele. Kui neid enne aruannete koostamist ei puhastata, moodustavad need koguläibe aruvtamisel eksitavaid tulemusi.
 
 -- Mitu müüki ületab 500 eurot?
-
-select count(*) as suured_muugid
-from sales
-where total_price > 500;
 
 | suured_muugid |
 | ------------- |
